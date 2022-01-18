@@ -10,7 +10,7 @@ using Proiect_Pitaru_Cosmin.Models;
 
 namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
 {
-    public class CreateModel : PageModel
+    public class CreateModel : CategoriiCeaiPageModel
     {
         private readonly Proiect_Pitaru_Cosmin.Data.Proiect_Pitaru_CosminContext _context;
 
@@ -22,25 +22,42 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
         public IActionResult OnGet()
         {
             ViewData["FurnizorID"] = new SelectList(_context.Set<Furnizor>(), "ID", "NumeFurnizor");
+            var ceai = new Ceai();
+            ceai.CategoriiCeai = new List<CategorieCeai>();
+            PopulateAssignedCategoryData(_context, ceai);
             return Page();
         }
 
         [BindProperty]
         public Ceai Ceai { get; set; }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-            if (!ModelState.IsValid)
+            var newCeai = new Ceai();
+            if (selectedCategories != null)
             {
-                return Page();
+                newCeai.CategoriiCeai = new List<CategorieCeai>();
+                foreach (var cat in selectedCategories)
+                {
+                    var catToAdd = new CategorieCeai
+                    {
+                        CategorieID = int.Parse(cat)
+                    };
+                    newCeai.CategoriiCeai.Add(catToAdd);
+                }
             }
-
-            _context.Ceai.Add(Ceai);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            if (await TryUpdateModelAsync<Ceai>(
+            newCeai,
+            "Ceai",
+            i => i.Nume_ceai, i => i.Producator,
+            i => i.Pret, i => i.DataAmbalarii, i => i.FurnizorID))
+            {
+                _context.Ceai.Add(newCeai);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            PopulateAssignedCategoryData(_context, newCeai);
+            return Page();
         }
     }
 }

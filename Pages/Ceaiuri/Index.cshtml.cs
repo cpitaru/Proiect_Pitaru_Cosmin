@@ -21,11 +21,27 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
 
         public IList<Ceai> Ceai { get;set; }
 
-        public async Task OnGetAsync()
+        public CeaiData CeaiD { get; set; }
+        public int CeaiID { get; set; }
+        public int CategoryID { get; set; }
+        public async Task OnGetAsync(int? id, int? categoryID)
         {
-            Ceai = await _context.Ceai
-                .Include(b => b.Furnizor)
-                .ToListAsync();
+            CeaiD = new CeaiData();
+
+            CeaiD.Ceaiuri = await _context.Ceai
+            .Include(b => b.Furnizor)
+            .Include(b => b.CategoriiCeai)
+            .ThenInclude(b => b.Categorie)
+            .AsNoTracking()
+            .OrderBy(b => b.Nume_ceai)
+            .ToListAsync();
+            if (id != null)
+            {
+                CeaiID = id.Value;
+                Ceai ceai = CeaiD.Ceaiuri
+                .Where(i => i.ID == id.Value).Single();
+                CeaiD.Categorii = ceai.CategoriiCeai.Select(s => s.Categorie);
+            }
         }
     }
 }

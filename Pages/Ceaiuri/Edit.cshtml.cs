@@ -11,7 +11,7 @@ using Proiect_Pitaru_Cosmin.Models;
 
 namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
 {
-    public class EditModel : PageModel
+    public class EditModel : CategoriiCeaiPageModel
     {
         private readonly Proiect_Pitaru_Cosmin.Data.Proiect_Pitaru_CosminContext _context;
 
@@ -30,12 +30,20 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
                 return NotFound();
             }
 
-            Ceai = await _context.Ceai.FirstOrDefaultAsync(m => m.ID == id);
+
+
+            Ceai = await _context.Ceai
+                .Include(b => b.Furnizor)
+                .Include(b => b.CategoriiCeai).ThenInclude(b => b.Categorie)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Ceai == null)
             {
                 return NotFound();
             }
+
+            PopulateAssignedCategoryData(_context, Ceai);
 
             ViewData["FurnizorID"] = new SelectList(_context.Set<Furnizor>(), "ID", "NumeFurnizor");
             return Page();
@@ -43,33 +51,38 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(Ceai).State = EntityState.Modified;
-
-            try
+            var ceaiToUpdate = await _context.Ceai
+            .Include(i => i.Furnizor)
+            .Include(i => i.CategoriiCeai)
+            .ThenInclude(i => i.Categorie)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            if (ceaiToUpdate == null)
             {
+                return NotFound();
+            }
+            if (await TryUpdateModelAsync<Ceai>(
+            ceaiToUpdate,
+            "Ceai",
+            i => i.Nume_ceai, i => i.Producator,
+            i => i.Pret, i => i.DataAmbalarii, i => i.Furnizor))
+            {
+                UpdateCeaiCategories(_context, selectedCategories, ceaiToUpdate);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CeaiExists(Ceai.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            //Apelam UpdateCeaiCategories pentru a aplica informatiile din checkboxuri la entitatea Books care
+            //este editata
+            UpdateCeaiCategories(_context, selectedCategories, ceaiToUpdate);
+            PopulateAssignedCategoryData(_context, ceaiToUpdate);
+            return Page();
         }
+
 
         private bool CeaiExists(int id)
         {

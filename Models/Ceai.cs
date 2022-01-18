@@ -11,10 +11,15 @@ namespace Proiect_Pitaru_Cosmin.Models
     {
         public int ID { get; set; }
 
+        [Required, StringLength(150, MinimumLength = 3)]
         [Display(Name = "Nume ceai")]
         public string Nume_ceai { get; set; }
+
+        [RegularExpression(@"^[A-Z][a-z]+\s[A-Z][a-z]+$", ErrorMessage = "Numele producatorului trebuie sa fie de forma 'Prenume Nume'"), 
+        Required, StringLength(50, MinimumLength = 3)]
         public string Producator { get; set; }
-        
+
+        [Range(1, 300)]
         [Column(TypeName = "decimal(6, 2)")] 
         public decimal Pret { get; set; }
 

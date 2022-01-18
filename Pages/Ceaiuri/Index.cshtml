@@ -28,12 +28,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ceai[0].Furnizor.NumeFurnizor)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ceai[0].CategoriiCeai)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Ceai) {
-        <tr>
+        @foreach (var item in Model.CeaiD.Ceaiuri)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CeaiID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Nume_ceai)
             </td>
@@ -50,11 +59,19 @@
                 @Html.DisplayFor(modelItem => item.Furnizor.NumeFurnizor)
             </td>
             <td>
+                @{
+                    foreach (var category in item.CategoriiCeai)
+                    {
+                        @category.Categorie.ID @: @category.Categorie.NumeCategorie <br />
+                    }
+                }
+            </td>
+            <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

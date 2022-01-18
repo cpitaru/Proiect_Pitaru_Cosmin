@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Proiect_Pitaru_Cosmin.Data;
 
 namespace Proiect_Pitaru_Cosmin
 {
@@ -24,6 +26,9 @@ namespace Proiect_Pitaru_Cosmin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddDbContext<Proiect_Pitaru_CosminContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Proiect_Pitaru_CosminContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

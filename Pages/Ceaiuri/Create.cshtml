@@ -1,0 +1,49 @@
+﻿@page
+@model Proiect_Pitaru_Cosmin.Pages.Ceaiuri.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Ceai</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ceai.Nume_ceai" class="control-label"></label>
+                <input asp-for="Ceai.Nume_ceai" class="form-control" />
+                <span asp-validation-for="Ceai.Nume_ceai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ceai.Producator" class="control-label"></label>
+                <input asp-for="Ceai.Producator" class="form-control" />
+                <span asp-validation-for="Ceai.Producator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ceai.Pret" class="control-label"></label>
+                <input asp-for="Ceai.Pret" class="form-control" />
+                <span asp-validation-for="Ceai.Pret" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ceai.DataAmbalarii" class="control-label"></label>
+                <input asp-for="Ceai.DataAmbalarii" class="form-control" />
+                <span asp-validation-for="Ceai.DataAmbalarii" class="textdanger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

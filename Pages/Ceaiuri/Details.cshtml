@@ -1,0 +1,43 @@
+﻿@page
+@model Proiect_Pitaru_Cosmin.Pages.Ceaiuri.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Ceai</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ceai.Nume_ceai)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ceai.Nume_ceai)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ceai.Producator)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ceai.Producator)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ceai.Pret)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ceai.Pret)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ceai.DataAmbalarii)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ceai.DataAmbalarii)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Ceai.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

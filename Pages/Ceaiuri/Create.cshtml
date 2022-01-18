@@ -33,6 +33,10 @@
                 <input asp-for="Ceai.DataAmbalarii" class="form-control" />
                 <span asp-validation-for="Ceai.DataAmbalarii" class="textdanger"></span>
             </div>
+            <label asp-for="Ceai.FurnizorID" class="control-label">Nume furnizor</label>
+            <select asp-for="Ceai.FurnizorID" class="form-control" asp-items="ViewBag.FurnizorID">
+            </select>
+            <span asp-validation-for="Ceai.FurnizorID" class="text-danger"></span>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

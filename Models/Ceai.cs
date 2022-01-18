@@ -21,5 +21,10 @@ namespace Proiect_Pitaru_Cosmin.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data ambalarii")]
         public DateTime DataAmbalarii { get; set; }
+
+        public int FurnizorID { get; set; }
+        public Furnizor Furnizor { get; set; }
+
+        public ICollection<CategorieCeai> CategoriiCeai { get; set; }
     }
 }

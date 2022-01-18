@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Proiect_Pitaru_Cosmin.Data;
 using Proiect_Pitaru_Cosmin.Models;
 
-namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
+namespace Proiect_Pitaru_Cosmin.Pages.Furnizori
 {
     public class CreateModel : PageModel
     {
@@ -21,12 +21,11 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
 
         public IActionResult OnGet()
         {
-            ViewData["FurnizorID"] = new SelectList(_context.Set<Furnizor>(), "ID", "NumeFurnizor");
             return Page();
         }
 
         [BindProperty]
-        public Ceai Ceai { get; set; }
+        public Furnizor Furnizor { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -37,7 +36,7 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
                 return Page();
             }
 
-            _context.Ceai.Add(Ceai);
+            _context.Furnizor.Add(Furnizor);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

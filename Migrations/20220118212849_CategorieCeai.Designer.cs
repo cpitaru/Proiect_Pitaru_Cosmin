@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_Pitaru_Cosmin.Data;
 
 namespace Proiect_Pitaru_Cosmin.Migrations
 {
     [DbContext(typeof(Proiect_Pitaru_CosminContext))]
-    partial class Proiect_Pitaru_CosminContextModelSnapshot : ModelSnapshot
+    [Migration("20220118212849_CategorieCeai")]
+    partial class CategorieCeai
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Pitaru_Cosmin.Data;
 using Proiect_Pitaru_Cosmin.Models;
 
-namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
+namespace Proiect_Pitaru_Cosmin.Pages.Furnizori
 {
     public class IndexModel : PageModel
     {
@@ -19,13 +19,11 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
             _context = context;
         }
 
-        public IList<Ceai> Ceai { get;set; }
+        public IList<Furnizor> Furnizor { get;set; }
 
         public async Task OnGetAsync()
         {
-            Ceai = await _context.Ceai
-                .Include(b => b.Furnizor)
-                .ToListAsync();
+            Furnizor = await _context.Furnizor.ToListAsync();
         }
     }
 }

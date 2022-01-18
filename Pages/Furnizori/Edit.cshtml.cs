@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Proiect_Pitaru_Cosmin.Data;
 using Proiect_Pitaru_Cosmin.Models;
 
-namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
+namespace Proiect_Pitaru_Cosmin.Pages.Furnizori
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
         }
 
         [BindProperty]
-        public Ceai Ceai { get; set; }
+        public Furnizor Furnizor { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +30,12 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
                 return NotFound();
             }
 
-            Ceai = await _context.Ceai.FirstOrDefaultAsync(m => m.ID == id);
+            Furnizor = await _context.Furnizor.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (Ceai == null)
+            if (Furnizor == null)
             {
                 return NotFound();
             }
-
-            ViewData["FurnizorID"] = new SelectList(_context.Set<Furnizor>(), "ID", "NumeFurnizor");
             return Page();
         }
 
@@ -50,7 +48,7 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
                 return Page();
             }
 
-            _context.Attach(Ceai).State = EntityState.Modified;
+            _context.Attach(Furnizor).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +56,7 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CeaiExists(Ceai.ID))
+                if (!FurnizorExists(Furnizor.ID))
                 {
                     return NotFound();
                 }
@@ -71,9 +69,9 @@ namespace Proiect_Pitaru_Cosmin.Pages.Ceaiuri
             return RedirectToPage("./Index");
         }
 
-        private bool CeaiExists(int id)
+        private bool FurnizorExists(int id)
         {
-            return _context.Ceai.Any(e => e.ID == id);
+            return _context.Furnizor.Any(e => e.ID == id);
         }
     }
 }

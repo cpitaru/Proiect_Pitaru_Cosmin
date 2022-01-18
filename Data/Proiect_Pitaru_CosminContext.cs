@@ -17,5 +17,7 @@ namespace Proiect_Pitaru_Cosmin.Data
         public DbSet<Proiect_Pitaru_Cosmin.Models.Ceai> Ceai { get; set; }
 
         public DbSet<Proiect_Pitaru_Cosmin.Models.Furnizor> Furnizor { get; set; }
+
+        public DbSet<Proiect_Pitaru_Cosmin.Models.Categorie> Categorie { get; set; }
     }
 }

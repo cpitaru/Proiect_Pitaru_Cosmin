@@ -30,6 +30,8 @@ namespace Proiect_Pitaru_Cosmin.Models
         public int FurnizorID { get; set; }
         public Furnizor Furnizor { get; set; }
 
+
+        [Display(Name = "Categorii ceai")]
         public ICollection<CategorieCeai> CategoriiCeai { get; set; }
     }
 }
